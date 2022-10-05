@@ -1,7 +1,25 @@
 //! Aufgabe 2.1: Primzahltest
 
-fn main() {
+pub fn is_prime(n: i64) -> bool {
+    if n == 2 {
+        return true;
+    }
+    if n <= 1 || n % 2 == 0 {
+        return false;
+    }
+    let sqr = (n as f64).sqrt() as i64;
+    for test in (3..sqr + 1).step_by(2) {
+        if n % test == 0 {
+            return false;
+        };
+    }
+    return true;
+}
 
+fn main() {
+    for i in 1..20 {
+        println!("{}{}", i, if is_prime(i) { "*" } else { "" })
+    }
 }
 
 #[test]
