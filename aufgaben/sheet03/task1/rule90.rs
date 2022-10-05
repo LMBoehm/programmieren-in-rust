@@ -2,10 +2,16 @@
 
 fn main() {
     // TODO: Task 1c)
+    let mut v = read_input();
+    for _ in 0..20 {
+        v = next_step(&mut v);
+        println!("{}", v.iter().map(|e| if *e {'█'} else {' '}).collect::<String>());
+    }
 }
 
 /// Reads a valid initial configuration for our automaton from the terminal.
 fn read_input() -> Vec<bool> {
+// fn read_input() -> String {
     // This tries to read a string from the terminal, checks whether it's
     // valid (only contains 1's and 0's). If the user fails to input a correct
     // string, this routine will ask again until the user finally manages to
@@ -38,9 +44,20 @@ fn read_input() -> Vec<bool> {
     };
 
     // TODO: Task 1a)
+    input.chars().map(|c| if c == '0' { false } else { true }).collect::<Vec<bool>>()
 }
 
+
 // TODO: Task 1b)
+fn next_step(old : &[bool]) -> Vec<bool> {
+    let mut new = Vec::with_capacity(old.len());
+    new.push(old[1] ^ old[old.len() - 1]);
+    for i in 1..old.len()-1 {
+        new.push(old[i-1] ^ old[i+1]);
+    }
+    new.push(old[0] ^ old[old.len() - 2]);
+    new
+}
 
 #[test]
 fn rule90_rules() {
